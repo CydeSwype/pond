@@ -1,6 +1,30 @@
 const {app, BrowserWindow} = require('electron');
+const log = require('electron-log')
+const path = require('path')
 
+const isDev = process.mainModule.filename.indexOf('app.asar') === -1
+
+let hotReload;
 let mainWindow;
+let app_version = app.getVersion();
+
+if (isDev) {
+    app_version += ' local debug';
+    hotReload = 1;
+} else {
+    // supress uncaught exceptions in production
+    process.on('uncaughtException', function (error) {
+        log.info('uncaughtException occurred', error);
+    })
+}
+
+if (hotReload) {
+    log.info('🔥🔥🔥  hot reload is ON! 🔥🔥🔥')
+    require('electron-reload')(__dirname, {
+        electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
+        hardResetMethod: 'exit'
+    })
+}  
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {
@@ -16,7 +40,7 @@ app.on('ready', function() {
     mainWindow = new BrowserWindow({width: 800, height: 715});
 
     // and load the index.html of the app.
-    mainWindow.loadURL('file://' + __dirname + '/dist/index.html');
+    mainWindow.loadURL('file://' + __dirname + '/src/index.html');
 
     // Hide menu during dev too
     // mainWindow.setMenu(null)

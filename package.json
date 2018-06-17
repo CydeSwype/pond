@@ -1,14 +1,23 @@
 {
     "name": "october-pond",
+    "productName": "October Pond",
+    "description": "Develop and deploy from your desktop",
     "version": "0.0.1",
-    "main": "main.js",
+    "main": "./app/main.js",
     "devDependencies": {
+        "electron": "^1.8.2",
         "fs-jetpack": "^1.1.0",
         "gulp": "^3.9.1",
+        "electron-reload": "^1.2.2",
         "gulp-util": "^3.0.8"
     },
+    "dependencies": {
+        "electron-log": "^2.2.14",
+        "path": "^0.12.7"
+    },
     "scripts": {
-        "start": "cd app && sh node_modules/.bin/electron ./",
+        "start": "node_modules/.bin/electron . --enable-logging",
+        "start-bk": "cd app && sh node_modules/.bin/electron ./",
         "postinstall": "cd ./app  && npm install",
         "watch": "sh node_modules/.bin/gulp copy-assets && cd app && sh node_modules/.bin/webpack --watch"
     }
