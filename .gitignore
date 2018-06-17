@@ -13,3 +13,4 @@ releases/*
 !releases/.gitkeep
 app/src/assets-bin-php/*
 !app/src/assets-bin-php/.gitkeep
+package-lock.json
